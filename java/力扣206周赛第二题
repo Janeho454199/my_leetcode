@@ -1,0 +1,9 @@
+//public class 力扣206周赛第二题 {
+//    public int unhappyFriends(int n, int[][] preferences, int[][] pairs) {
+//        int counts = 0;
+//        for(int i = 0; i < n; i++){
+//            if(preferences[i][0] == )
+//        }
+//        return counts;
+//    }
+//}
