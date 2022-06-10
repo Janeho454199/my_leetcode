@@ -1,34 +1,72 @@
 """
-你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字：'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。
-每个拨轮可以自由旋转：例如把'9'变为'0'，'0'变为'9'。每次旋转都只能旋转一个拨轮的一位数字。
+思路：双向BFS
 
-锁的初始数字为 '0000' ，一个代表四个拨轮的数字的字符串。
-
-列表 deadends 包含了一组死亡数字，一旦拨轮的数字和列表里的任何一个元素相同，这个锁将会被永久锁定，无法再被旋转。
-
-字符串 target 代表可以解锁的数字，你需要给出解锁需要的最小旋转次数，如果无论如何不能解锁，返回 -1 。
-
-输入：deadends = ["0201","0101","0102","1212","2002"], target = "0202"
-输出：6
-解释：
-可能的移动序列为 "0000" -> "1000" -> "1100" -> "1200" -> "1201" -> "1202" -> "0202"。
-注意 "0000" -> "0001" -> "0002" -> "0102" -> "0202" 这样的序列是不能解锁的，
-因为当拨动到 "0102" 时这个锁就会被锁定。
-
-输入: deadends = ["8888"], target = "0009"
-输出：1
-解释：把最后一位反向旋转一次即可 "0000" -> "0009"。
-
-输入: deadends = ["8887","8889","8878","8898","8788","8988","7888","9888"], target = "8888"
-输出：-1
-解释：无法旋转到目标数字且不被锁定。
-
-
-1 <= deadends.length <= 500
-deadends[i].length == 4
-target.length == 4
-target 不在 deadends 之中
-target 和 deadends[i] 仅由若干位数字组成
-
+BFS通用基本框架
+queue = [起始点]    # 队列实现BFS
+visited = set()    # 记录访问过的元素点，避免“回头”访问，陷入循环
+visited.add(起始点)
+step = 0
+while queue:
+    # 将所有节点同时向前扩散一步
+    for _ in range(len(queue)):
+        cur = queue.pop(0)
+        if 找到目标:
+            return 结果
+        # 将cur的【所有相邻且没被访问过的节点】加入队列
+        for near in cur的邻近节点：
+            if near not in visited:
+                queue.append(near)
+                visited.add(near)
+    step += 1    # 记录路径长度
 """
+import queue
 
+
+class Solution:
+    def openLock(self, deadends, target):
+        q = queue.Queue()
+        q.put('0000')
+        visited = set()
+        visited.add('0000')
+        deadset = set(deadends)
+        step = 0
+
+        while q.qsize():
+            for _ in range(q.qsize()):
+                cur = q.get()
+                if cur in deadset:
+                    continue
+                if cur == target:
+                    return step
+                for i in range(4):
+                    up = self.up(cur, i)
+                    if up not in visited:
+                        q.put(up)
+                        visited.add(up)
+                    down = self.down(cur, i)
+                    if down not in visited:
+                        q.put(down)
+                        visited.add(down)
+            step += 1
+        return -1
+
+    def up(self, c, i):
+        c = list(c)
+        if c[i] == '9':
+            c[i] = '0'
+        else:
+            c[i] = str(int(c[i]) + 1)
+        return ''.join(c)
+
+    def down(self, c, i):
+        c = list(c)
+        if c[i] == '0':
+            c[i] = '9'
+        else:
+            c[i] = str(int(c[i]) - 1)
+        return ''.join(c)
+
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.openLock(["0201", "0101", "0102", "1212", "2002"], "0202"))
