@@ -1,3 +1,9 @@
+"""
+有效 二叉搜索树定义如下：
+节点的左子树只包含 小于 当前节点的数。
+节点的右子树只包含 大于 当前节点的数。
+所有左子树和右子树自身必须也是二叉搜索树。
+"""
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -10,6 +16,7 @@ from tree.construct_binary_tree import construct_binary_tree
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # 根据二叉搜索树的性质，如果两个节点都小于当前节点，那他们的父节点就在左子树，反之右子树。
         if root.val > p.val and root.val > q.val:
             return self.lowestCommonAncestor(root.left, p, q)
         elif root.val < p.val and root.val < q.val:
@@ -23,5 +30,4 @@ if __name__ == '__main__':
     root = construct_binary_tree(nums)  # 构造二叉树
     s = Solution()
     ss = s.lowestCommonAncestor(root, TreeNode(2), TreeNode(4))
-
     print('done!')
