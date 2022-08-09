@@ -4,13 +4,6 @@ from typing import List
 
 class Solution:
     def reachableNodes(self, n: int, edges: List[List[int]], restricted: List[int]) -> int:
-        """
-        DFS
-        :param n:
-        :param edges:
-        :param restricted:
-        :return:
-        """
         visited = set()
         restricted = set(restricted)
         visited.add(0)
@@ -36,32 +29,9 @@ class Solution:
 
         return len(visited)
 
-    def reachableNodes2(self, n: int, edges: List[List[int]], restricted: List[int]) -> int:
-        """
-        BFS
-        :param n:
-        :param edges:
-        :param restricted:
-        :return:
-        """
-        graph = collections.defaultdict(set)
-        for a, b in edges:
-            graph[a].add(b)
-            graph[b].add(a)
 
-        visited = set(restricted)
-
-        stack = [0]
-        ans = 0
-
-        while stack:
-            curr = stack.pop()
-            if curr in visited:
-                continue
-            visited.add(curr)
-            ans += 1
-
-            for v in graph[curr]:
-                stack.append(v)
-
-        return ans
+if __name__ == '__main__':
+    s = Solution()
+    print(s.reachableNodes(10,
+[[8,2],[2,5],[5,0],[2,7],[1,7],[3,8],[0,4],[3,9],[1,6]],
+[9,8,4,5,3,1]))
