@@ -10,6 +10,7 @@ from tree.TreeNode import TreeNode
 class Solution:
     def isBalanced(self, root: TreeNode) -> bool:
         """
+        平衡二叉树：二叉树的每个节点的左右子树的高度差的绝对值不超过 11，则二叉树是平衡二叉树
         对于当前遍历到的节点，首先计算左右子树的高度，如果左右子树的高度差是否不超过 1，
         再分别递归地遍历左右子节点，并判断左子树和右子树是否平衡
         :param root:
