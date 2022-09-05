@@ -15,9 +15,7 @@ class Solution:
                 temp = int(temp / base)
                 i = i + 1
             tempList.reverse()
-            binary = ""
-            for j in range(len(tempList)):
-                binary = binary + str(tempList[j])
+            binary = "".join(str(s) for s in tempList)
 
             print("the decimal is: %d and after convering by %d base is %s" % (decimalVar, base, binary))
             return binary
@@ -32,4 +30,4 @@ class Solution:
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.isStrictlyPalindromic(1000000000000000000))
+    print(s.isStrictlyPalindromic(9))
